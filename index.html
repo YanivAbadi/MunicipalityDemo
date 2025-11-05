@@ -107,7 +107,7 @@
 
           <div>
             <label for="phone">טלפון נייד</label>
-            <input id="phone" name="phone" required pattern="^\\+?[0-9]{9,15}$" placeholder="0501234567" inputmode="tel" />
+            <input id="phone" name="phone" required pattern="^[0-9]{9,15}$" placeholder="0501234567" inputmode="tel" />
             <small class="muted">נדרש לקוד אימות עתידי ולקבלת עדכונים</small>
           </div>
           <div>
@@ -137,15 +137,15 @@
             <div id="fileList" class="muted"></div>
           </fieldset>
 
-          <div class="row">
+          <div class="row" style="justify-content:flex-end">
             <input type="checkbox" id="consentEmail" name="consentEmail" />
             <label for="consentEmail">אני מסכים/ה לקבל עדכונים בדוא"ל</label>
           </div>
-          <div class="row">
+          <div class="row" style="justify-content:flex-end">
             <input type="checkbox" id="consentWhatsApp" name="consentWhatsApp" />
             <label for="consentWhatsApp">אני מסכים/ה לקבל עדכונים בוואטסאפ</label>
           </div>
-          <div class="row">
+          <div class="row" style="justify-content:flex-end">
             <input type="checkbox" id="consentPrivacy" name="consentPrivacy" required />
             <label for="consentPrivacy">מאשר/ת את מדיניות הפרטיות ותנאי השימוש</label>
           </div>
@@ -161,7 +161,7 @@
         <h3>קיבלנו! ✅</h3>
         <p>מספר פנייה: <strong id="ticketNumber"></strong></p>
         <p>הפנייה נשלחה למחלקה: <strong id="ticketDept"></strong></p>
-        <div class="row">
+        <div class="row" style="justify-content:flex-end">
           <button class="btn" id="btnGoStatus">בדיקת סטטוס</button>
           <button class="btn ghost" id="btnNew">פתיחת פנייה נוספת</button>
         </div>
@@ -485,7 +485,7 @@
         t.status = 'ready_for_close';
         t.messages.push({at:new Date().toISOString(), from:'system', body:'בקשת סגירה נשלחה לתושב'});
         t.updatedAt = new Date().toISOString();
-        saveTickets(); showTicketStatus(t); toast('סימון הפנייה כ\"מוכנה לסגירה\"');
+        saveTickets(); showTicketStatus(t); toast('סימון הפנייה כ"מוכנה לסגירה"');
       };
     }
 
@@ -532,8 +532,8 @@
           st.className = 'col-status s-'+t.status;
 
           const actions = tr.querySelector('.col-actions');
-          const btn1 = document.createElement('button'); btn1.className='btn'; btn1.textContent='ל\"בטיפול\"';
-          btn1.onclick = ()=>{ t.status='in_progress'; bump(t,'עודכן ל\"בטיפול\"'); };
+          const btn1 = document.createElement('button'); btn1.className='btn'; btn1.textContent='ל"בטיפול"';
+          btn1.onclick = ()=>{ t.status='in_progress'; bump(t,'עודכן ל"בטיפול"'); };
           const btn2 = document.createElement('button'); btn2.className='btn warn'; btn2.textContent='דרוש מידע';
           btn2.onclick = ()=>{ t.status='pending_citizen'; bump(t,'דרוש מידע מהתושב'); };
           const btn3 = document.createElement('button'); btn3.className='btn ok'; btn3.textContent='מוכן לסגירה';
@@ -551,11 +551,11 @@
           tbody.appendChild(tr);
         });
 
-      document.getElementById('slaCounters').textContent = `X:${counters.X} • Y:${counters.Y} • Z:${counters.Z}`;
+      $('#slaCounters').textContent = `X:${counters.X} • Y:${counters.Y} • Z:${counters.Z}`;
     }
 
     selDept.addEventListener('change', renderAdmin);
-    document.getElementById('f-state').addEventListener('change', renderAdmin);
+    $('#f-state').addEventListener('change', renderAdmin);
 
     function bump(t, msg){
       t.updatedAt = new Date().toISOString();
@@ -564,7 +564,7 @@
     }
 
     // רענון דשבורד אוטומטי כל 60ש׳ (באבטיפוס – כל 30ש׳)
-    setInterval(()=>{ if(document.querySelector('section#screen-admin').classList.contains('active')) renderAdmin(); }, 30000);
+    setInterval(()=>{ if($('section#screen-admin').classList.contains('active')) renderAdmin(); }, 30000);
 
     // מילוי ראשוני של הטבלה אם נכנסו ישירות
     if(location.hash.slice(1)==='admin') renderAdmin();
